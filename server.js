@@ -40,6 +40,13 @@ io.on("connection", (socket) => {
 
     io.emit("new_user", users);
   });
+
+  socket.on("send_message", (data) => {
+    console.log(data);
+
+    const socketId = users[data.receiver];
+    io.to(socketId).emit("new_message", data);
+  });
 });
 
 httpServer.listen(PORT, () => {
